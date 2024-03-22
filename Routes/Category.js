@@ -3,11 +3,11 @@ const con = require("../config");
 const router = express.Router();
 
 router.get("/", (req, resp) => {
-  const sql = "select * from  products";
+  const sql = "select * from  categories";
 
   con.query(sql, (err, data) => {
     if (err) {
-      resp.status(500).json({ message: "Product Not Found" });
+      resp.status(500).json({ message: "Category Not Found" });
     } else {
       resp.status(200).send(data);
     }
