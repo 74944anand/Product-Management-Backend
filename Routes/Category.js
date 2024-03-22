@@ -3,7 +3,7 @@ const con = require("../config");
 const router = express.Router();
 
 router.get("/", (req, resp) => {
-  const sql = "select * from  categories";
+  const sql = "select * from  category";
 
   con.query(sql, (err, data) => {
     if (err) {
