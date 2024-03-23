@@ -14,6 +14,21 @@ router.get("/", (req, resp) => {
   });
 });
 
+
+
+router.get("/:id", (req, resp) => {
+  const {id}= req.params;
+  const sql = "select * from  category where  id=?";
+  con.query(sql,[id], (err, data) => {
+    if (err) {
+      resp.status(500).json({ message: "Category Not Found" });
+    } else {
+      resp.status(200).send(data);
+    }
+  });
+});
+
+
 router.post("/", (req, resp) => {
   const { name } = req.body;
   const sql = "INSERT INTO category name VALUES(?)";
