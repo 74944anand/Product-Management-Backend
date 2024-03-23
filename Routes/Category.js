@@ -14,12 +14,10 @@ router.get("/", (req, resp) => {
   });
 });
 
-
-
 router.get("/:id", (req, resp) => {
-  const {id}= req.params;
+  const { id } = req.params;
   const sql = "select * from  category where  id=?";
-  con.query(sql,[id], (err, data) => {
+  con.query(sql, [id], (err, data) => {
     if (err) {
       resp.status(500).json({ message: "Category Not Found" });
     } else {
@@ -27,7 +25,6 @@ router.get("/:id", (req, resp) => {
     }
   });
 });
-
 
 router.post("/", (req, resp) => {
   const { name } = req.body;
@@ -37,6 +34,18 @@ router.post("/", (req, resp) => {
       res.status(500).json({ message: "Failed to add Category." });
     } else {
       resp.status(201).json({ message: "Category Added" });
+    }
+  });
+});
+
+router.put("/", (req, resp) => {
+  const { id, name } = req.body;
+  const sql = "UPDATE category SET name=? WHERE id=?";
+  con.query(sql, [name, id], (err, result) => {
+    if (err) {
+      res.status(500).json({ message: "Failed to update Category." });
+    } else {
+      resp.status(201).json({ message: "Category updated" });
     }
   });
 });
