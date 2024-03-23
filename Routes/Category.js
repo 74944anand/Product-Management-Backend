@@ -28,7 +28,7 @@ router.get("/:id", (req, resp) => {
 
 router.post("/", (req, resp) => {
   const { name } = req.body;
-  const sql = "INSERT INTO category name VALUES(?)";
+  const sql = "INSERT INTO category (name) VALUES(?)";
   con.query(sql, [name], (err, result) => {
     if (err) {
       res.status(500).json({ message: "Failed to add Category." });
@@ -38,8 +38,9 @@ router.post("/", (req, resp) => {
   });
 });
 
-router.put("/", (req, resp) => {
-  const { id, name } = req.body;
+router.put("/:id", (req, resp) => {
+  const { id } = req.params;
+  const { name } = req.body;
   const sql = "UPDATE category SET name=? WHERE id=?";
   con.query(sql, [name, id], (err, result) => {
     if (err) {
