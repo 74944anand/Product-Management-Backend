@@ -2,10 +2,11 @@ const express = require("express");
 const con = require("../config");
 const router = express.Router();
 
-router.get("/", (req, resp) => {
-  const sql = "select * from  products";
+router.get("/product/:id", (req, resp) => {
+  const {id}= req.params;
+  const sql = "select * from  products WHERE id=?";
 
-  con.query(sql, (err, data) => {
+  con.query(sql,[id], (err, data) => {
     if (err) {
       resp.status(500).json({ message: "Product Not Found" });
     } else {
@@ -13,8 +14,6 @@ router.get("/", (req, resp) => {
     }
   });
 });
-
-
 
 
 router.get("/:page", (req, res) => {
@@ -27,9 +26,9 @@ router.get("/:page", (req, res) => {
              category.id AS category_id, category.name AS category_name
       FROM products
       INNER JOIN category ON products.category_id = category.id
+      ORDER BY products.id ASC
       LIMIT ?, ?
     `;
-
   con.query(sql, [offset, limit], (err, results) => {
     if (err) {
       res.status(500).json({ message: err.message });
